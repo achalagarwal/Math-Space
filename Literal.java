@@ -5,6 +5,7 @@ public class Literal {
     private Double value;
     private boolean hasValue;
     Literal(String str){
+        str = str.replaceAll("\\s","");
         this.literal = str;
         this.hasValue= false;
     }

@@ -174,7 +174,7 @@ public class Expression { //equation has variables, numbers and operators
                 n.value = new Literal(str);
                 boolean flag=false;
                 for(Literal l:literals) {
-                    if (l.equals((Literal) n.value)) {
+                    if (l.toString().equals(n.value.toString())) {
                         flag = true;
                         break;
                     }
@@ -202,7 +202,7 @@ public class Expression { //equation has variables, numbers and operators
             boolean flag = false;
             left = new Literal(str_left);
             for(Literal l:literals){
-                if(l.equals((Literal)left)) {
+                if(l.toString().equals(left.toString())) {
                     left = l;
                     flag = true;
                 }
@@ -220,7 +220,7 @@ public class Expression { //equation has variables, numbers and operators
             boolean flag = false;
             right = new Literal(str_right);
             for(Literal l:literals){
-                if(l.equals((Literal)right)) {
+                if(l.toString().equals(right.toString())) {
                     right = l;
                     flag = true;
                 }
@@ -234,7 +234,9 @@ public class Expression { //equation has variables, numbers and operators
         n.left = new ParseTree(left);
         n.right = new ParseTree(right);
         n.value= new Operator(str.charAt(pos)) ;
+        if(!(left instanceof Literal)&&!(left instanceof Number))
         generate(n.left);
+        if(!(right instanceof Literal)&&!(right instanceof Number))
         generate(n.right);
         return;
     }
@@ -285,6 +287,7 @@ public class Expression { //equation has variables, numbers and operators
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         String a = sc.nextLine();
+        a = a.replaceAll("\\s", "");
         Expression e = new Expression(a);
 
 //        a += " ";
@@ -356,7 +359,6 @@ public class Expression { //equation has variables, numbers and operators
         ParseTree start = new ParseTree(e.e);
         e.generate(start);
         e.p = start;
-        e.getUnknowns();
         e.simplify(start);
         //final double result = e.result(start);
        // System.out.println(result);
