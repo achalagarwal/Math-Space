@@ -1,14 +1,24 @@
 package MathSpace;
 
+import java.util.Arrays;
+
+import static java.lang.Integer.max;
+
 public class ParseTree {
     ParseTree left;
     ParseTree right;
+    ParseTree parent;
     Object value;
-
-    ParseTree(Object o) {
+    int level;
+    ParseTree(Object o, ParseTree parent) {
         this.value = o;
         this.left = null;
         this.right = null;
+        this.parent = parent;
+        if(parent==null)
+            level = 0;
+        else
+            level = parent.level +1;
     }
 
     public ParseTree getLeft(){
@@ -36,5 +46,168 @@ public class ParseTree {
         else
             return this.right==null?this.left.containsUnknowns():this.left.containsUnknowns()||this.right.containsUnknowns();
         //return (this.left.containsUnknowns()&&this.right.containsUnknowns());
+
+    }
+    public double getLiteralInstances(Literal l){
+        double a = 0.0;
+        if(this==null)
+            return 0.0;
+        if(this.value instanceof Literal)
+            if(!((Literal) this.value).hasValue())
+            if(((Literal) this.value).equals(l)){
+            a = this.getCoeffecient();
+
+        }
+            if(this.left!=null)
+            a += this.left.getLiteralInstances(l);
+        if(this.right!=null)
+            a+= this.right.getLiteralInstances(l);
+
+        return a;
+
+    }
+    public void simplify(){
+        ParseTree p = this;
+        if(!p.containsUnknowns()){
+            Number n = new Number(Expression.result(p));
+            p.left = null;
+            p.right = null;
+            p.value = n;
+        }
+        else{
+            if(p.left!=null)
+                p.left.simplify();
+            if(p.right!=null)
+                p.right.simplify();
+        }
+
+    }
+//    public double getNumberCoeffecient(){
+//
+//    }
+    public double getNumberInstances(){
+        this.simplify();
+        double a = 0.0;
+        if(this==null)
+            return 0.0;
+        if(this.value instanceof Literal)
+            if(((Literal) this.value).hasValue())
+                    a = ((Literal) this.value).getValue();
+
+
+        if(this.left!=null)
+            a += this.left.getNumberInstances();
+        if(this.right!=null)
+            a+= this.right.getNumberInstances();
+
+        return a;
+
+    }
+    public ParseTree getBrother(){
+        if(this.parent!=null){
+            if(this.parent.left == this)
+                return this.parent.right;
+            if(this.parent.right == this)
+                return this.parent.left;
+        }
+        return null;
+    }
+    public double getCoeffecient(){
+        double a = 1.0;
+        ParseTree n = this;
+        ParseTree p = this.parent;
+        while(p!=null){
+            if(p.value instanceof  Operator){
+                if(((Operator) p.value).getOperator().equals("*")||((Operator) p.value).getOperator().equals("/")){
+                    Expression.simplify(n.getBrother());
+                    if(n.getBrother().value instanceof Number)
+                    a = ((Operator) p.value).operate(a,((Number) n.getBrother().value).getValue());
+                }
+            }
+            n = p;
+            p = p.parent;
+        }
+        return a;
+    }
+    public static void printSpace(int n){
+        for(int i = 0;i<n;i++)
+            System.out.print(" ");
+    }
+    public void print(String[][] x) {
+        int count[] = new int[2*((int)Math.pow(2,this.getHeight(0))+1)];
+        for(int a:count)
+            a=0;
+        count[count.length/3-1] = 1;
+        for(int i = 0;i<x.length;i++){
+            int m = 0;
+            for(int j = 0;j<count.length;j++){
+                if(count[j]==0)
+                    System.out.print(" ");
+                if(count[j]==1){
+                    System.out.print(x[i][m]);
+                    count[j]=0;
+                    if(Operator.isOperator(x[i][m++])){
+                        count[j]=2;
+                        count[j+1]=3;
+                    }
+
+                }
+            }
+            System.out.println();
+            for(int j = 0;j<count.length;j++) {
+                if(count[j]==0)
+                    System.out.print(" ");
+                if (count[j] == 2) {
+                    count[j]=0;
+                    System.out.print("/ ");
+                    count[j-1]=1;
+                }
+                else if (count[j] == 3) {
+                    System.out.print("\\");
+                    count[j]=0;
+                    count[j+1]=1;
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    public String[][] magic(String[][] str,int[] count){
+        str[this.level][count[this.level]] = this.value.toString();
+        count[this.level]++;
+        if(this.left!=null)
+            this.left.magic(str,count);
+        if(this.right!=null)
+            this.right.magic(str,count);
+        return str;
+    }
+    public String[][] level(){
+        int height = this.getHeight(0)+1;
+        String[][] x = new String[height][(int)Math.pow(2,height-1)];
+        int[] count = new int[height];
+        x = this.magic(x,count);
+        return x;
+    }
+
+    public int getHeight(int max){
+        int a=max+1,b=max+1;
+        if(this.left!=null)
+           a=  this.left.getHeight(this.level);
+        if(this.right!=null)
+            b=this.right.getHeight(this.level);
+        return max(a,b);
+    }
+    public static void main(String[] args) {
+        String a = "3+ 3*x +(4 - 3*x + 7 )";
+        Expression expression = new Expression(a);
+        //expression.p.simplify();
+        int z  = expression.p.getHeight(0);
+        String[][] x = new String[expression.p.getHeight(0)+1][(int)Math.pow(2,expression.p.getHeight(0))];
+        int[] count = new int[expression.p.getHeight(0)+1];
+        for(int e:count)
+            e=0;
+        x= expression.p.magic(x,count);
+        expression.p.print(x);
+        System.out.println("Done" + z);
     }
 }

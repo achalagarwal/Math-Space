@@ -1,5 +1,7 @@
 package MathSpace;
 
+import java.util.ArrayList;
+
 public class Literal {
     private String literal;
     private Double value;
@@ -12,6 +14,21 @@ public class Literal {
     Literal(Double a){
         this.value = a;
         this.hasValue = true;
+    }
+    public  boolean addLiteral(ArrayList<Literal> list){
+        boolean flag = true;
+        for(Literal l:list){
+            if(l.toString().equals(this.toString())){
+                flag = false;
+                break;
+            }
+        }
+        if(flag) {
+            list.add(this);
+        }
+        return flag;
+
+
     }
     @Override
     public String toString(){

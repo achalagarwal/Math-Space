@@ -12,7 +12,7 @@ public class Expression { //equation has variables, numbers and operators
         literals = new ArrayList<Literal>();
         String copy = a.replaceAll("\\s","");
         this.e = copy;
-        p = new ParseTree(a);
+        p = new ParseTree(a,null);
         generate(p);
         //simplify(p);
         getUnknowns();
@@ -26,7 +26,13 @@ public class Expression { //equation has variables, numbers and operators
         else
             return true;
     }
-    public void simplify(ParseTree p){
+    public double getCoeffecient(Literal l) {
+        if(literals.contains(l)){
+           // p.
+        }
+        return 0.0;
+    }
+    public static void simplify(ParseTree p){
         if(!p.containsUnknowns()){
             Number n = new Number(Expression.result(p));
             p.left = null;
@@ -231,8 +237,8 @@ public class Expression { //equation has variables, numbers and operators
          //   right = new Literal(str.substring(pos+1));
         else
             right =str_right;
-        n.left = new ParseTree(left);
-        n.right = new ParseTree(right);
+        n.left = new ParseTree(left,n);
+        n.right = new ParseTree(right,n);
         n.value= new Operator(str.charAt(pos)) ;
         if(!(left instanceof Literal)&&!(left instanceof Number))
         generate(n.left);
@@ -356,7 +362,7 @@ public class Expression { //equation has variables, numbers and operators
 //            }
 //        }
 
-        ParseTree start = new ParseTree(e.e);
+        ParseTree start = new ParseTree(e.e,null);
         e.generate(start);
         e.p = start;
         e.simplify(start);
