@@ -1,8 +1,9 @@
 package MathSpace;
 
+
 import java.util.ArrayList;
 
-public class Literal {
+public class Literal  {
     private String literal;
     private Double value;
     private boolean hasValue;
@@ -89,5 +90,19 @@ public class Literal {
     public void setValue(double value) {
         this.value = new Double(value);
         this.hasValue = true;
+    }
+
+    public static Object nextChain(Object token) {
+        return Number.checkChain(token);
+    }
+
+    public static Object checkChain(Object token) {
+        String str = token.toString();
+        if(isLiteral(str)) {
+            Literal l = new Literal(str);
+            return l;
+        }
+        else
+            return nextChain(token);
     }
 }

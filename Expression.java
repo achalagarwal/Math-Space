@@ -8,15 +8,29 @@ public class Expression { //equation has variables, numbers and operators
     //private boolean arr[]; //copy.length
     String e;
     ParseTree p;
+    Tokenizer t;
+    ArrayList<Object> tokens;
+    ArrayList<Operator> outerOps;
     Expression(String a){
-        literals = new ArrayList<Literal>();
-        String copy = a.replaceAll("\\s","");
-        this.e = copy;
-        p = new ParseTree(a,null);
-        generate(p);
-        //simplify(p);
-        getUnknowns();
-        // arr = new boolean[copy.length()];
+//         if(a.charAt(0)=='(' && a.charAt(a.length()-1)==')')
+//             a = a.substring(1,a.length()-1);
+         t = new Tokenizer(a);
+         tokens = new ArrayList<>();
+         tokenify();
+//        literals = new ArrayList<Literal>();
+//        String copy = a.replaceAll("\\s","");
+//        this.e = copy;
+//        p = new ParseTree(a,null);
+//        generate(p);
+//        //simplify(p);
+//        getUnknowns();
+//        // arr = new boolean[copy.length()];
+    }
+    public void tokenify(){
+        for(Object o:t.tokens){
+            Object temp = Utility.getType(o);
+            tokens.add(temp);
+        }
     }
     private boolean hasObject(int i) {
         if (contents.size() <= i)
@@ -290,90 +304,104 @@ public class Expression { //equation has variables, numbers and operators
         else
             return 0.0;
     }
-    public static void main(String[] args){
+    public static Object nextChain(Object str){
+        return null; //equation
+    }
+    public static Object checkChain(Object str){
+        return new Expression(str.toString());
+    }
+
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String a = sc.nextLine();
-        a = a.replaceAll("\\s", "");
         Expression e = new Expression(a);
-
-//        a += " ";
-//        //System.out.println(e.isExpression(a));
-//        int index = 0;
-//        String temp = "";
-//        for (int i = 0; i < a.length(); i++) {
-//            if (a.charAt(i) == ' ') {
-//                temp = a.substring(index, i);
-//                index = i + 1;
-//                if (Literal.isLiteral(temp)) {
-//                    Literal l = new Literal(temp);
-//                    e.contents.add(l);
-//                } else if (Operator.isOperator(temp)) {
-//                    Operator o = new Operator(temp);
-//                    e.contents.add(o);
-//                } else if (Number.isNumber(temp)) {
-//                    Number n = new Number(Double.parseDouble(temp));
-//                    e.contents.add(n);
-//                } else
-//                    System.out.println("What is This? " + temp);
-//                temp = "";
-//            }
-//            temp += a.charAt(i);
-//        }
-//
-//        for (int i = 0; i < e.contents.size(); i++) {
-//            Literal literal;
-//            if (e.contents.get(i) instanceof Literal) {
-//                literal = (Literal) e.contents.get(i);
-//                if (!literal.hasValue()) {
-//                    System.out.println("we need the value of " + e.contents.get(i).toString());
-//                    literal.setValue(sc.nextDouble());
-//                }
-//            } else
-//                System.out.println(e.contents.get(i));
-//
-//        }
-//        int p = -1;
-//        int i = 1;
-//        while (true) {
-//            if (e.contents.get(i) instanceof Operator) {
-//                Operator o = (Operator) e.contents.get(i);
-//                if (o.getPrecedence() >= p) {
-//                    if ((e.contents.get(i + 2) != null && e.contents.get(i + 2) instanceof Operator && ((Operator) e.contents.get(i + 2)).getPrecedence() <= o.getPrecedence()) || e.contents.get(i + 2) == null) {//replace with get next operator
-//                        Number n = new Number(((Operator) e.contents.get(i)).operate(((Literal) e.contents.get(i - 1)), ((Literal) e.contents.get(i + 1))));
-//                        e.contents.set(i, n);
-//                        e.contents.remove(i - 1);
-//                        e.contents.remove(i);
-//                        if (e.contents.get(i - 1) instanceof Operator) {
-//                            i = i - 1;
-//                        }
-//
-//                    }
-//                }
-//            }
-//            break;
-//        }
-//        System.out.println(e.contents.get(0));
-        //*****************
-        //FIX THIS SEMANTIC / PRAGMATIC
-//        double result=0;
-//        for(int i = 0;i<e.contents.size();i++){
-//            if(e.contents.get(i) instanceof Operator){
-//                result += ((Operator) e.contents.get(i)).operate(((Literal)e.contents.get(i-1)).getValue(),((Literal)e.contents.get(i+1)).getValue());
-//            }
-//        }
-
-        ParseTree start = new ParseTree(e.e,null);
-        e.generate(start);
-        e.p = start;
-        e.simplify(start);
-        //final double result = e.result(start);
-       // System.out.println(result);
-//        System.out.println(result);
-        //a + b * c + d = 12
-        //Double d = new Double(((Operator)e.contents.get(3)).operate(((Literal)e.contents.get(2)).getValue(),((Literal)e.contents.get(4)).getValue()));
-        //String copy = a.replaceAll("\\s", "");
-
-
+        System.out.println("Done");
     }
+
+//    public static void main(String[] args){
+//        Scanner sc = new Scanner(System.in);
+//        String a = sc.nextLine();
+//        a = a.replaceAll("\\s", "");
+//        Expression e = new Expression(a);
+//
+////        a += " ";
+////        //System.out.println(e.isExpression(a));
+////        int index = 0;
+////        String temp = "";
+////        for (int i = 0; i < a.length(); i++) {
+////            if (a.charAt(i) == ' ') {
+////                temp = a.substring(index, i);
+////                index = i + 1;
+////                if (Literal.isLiteral(temp)) {
+////                    Literal l = new Literal(temp);
+////                    e.contents.add(l);
+////                } else if (Operator.isOperator(temp)) {
+////                    Operator o = new Operator(temp);
+////                    e.contents.add(o);
+////                } else if (Number.isNumber(temp)) {
+////                    Number n = new Number(Double.parseDouble(temp));
+////                    e.contents.add(n);
+////                } else
+////                    System.out.println("What is This? " + temp);
+////                temp = "";
+////            }
+////            temp += a.charAt(i);
+////        }
+////
+////        for (int i = 0; i < e.contents.size(); i++) {
+////            Literal literal;
+////            if (e.contents.get(i) instanceof Literal) {
+////                literal = (Literal) e.contents.get(i);
+////                if (!literal.hasValue()) {
+////                    System.out.println("we need the value of " + e.contents.get(i).toString());
+////                    literal.setValue(sc.nextDouble());
+////                }
+////            } else
+////                System.out.println(e.contents.get(i));
+////
+////        }
+////        int p = -1;
+////        int i = 1;
+////        while (true) {
+////            if (e.contents.get(i) instanceof Operator) {
+////                Operator o = (Operator) e.contents.get(i);
+////                if (o.getPrecedence() >= p) {
+////                    if ((e.contents.get(i + 2) != null && e.contents.get(i + 2) instanceof Operator && ((Operator) e.contents.get(i + 2)).getPrecedence() <= o.getPrecedence()) || e.contents.get(i + 2) == null) {//replace with get next operator
+////                        Number n = new Number(((Operator) e.contents.get(i)).operate(((Literal) e.contents.get(i - 1)), ((Literal) e.contents.get(i + 1))));
+////                        e.contents.set(i, n);
+////                        e.contents.remove(i - 1);
+////                        e.contents.remove(i);
+////                        if (e.contents.get(i - 1) instanceof Operator) {
+////                            i = i - 1;
+////                        }
+////
+////                    }
+////                }
+////            }
+////            break;
+////        }
+////        System.out.println(e.contents.get(0));
+//        //*****************
+//        //FIX THIS SEMANTIC / PRAGMATIC
+////        double result=0;
+////        for(int i = 0;i<e.contents.size();i++){
+////            if(e.contents.get(i) instanceof Operator){
+////                result += ((Operator) e.contents.get(i)).operate(((Literal)e.contents.get(i-1)).getValue(),((Literal)e.contents.get(i+1)).getValue());
+////            }
+////        }
+//
+//        ParseTree start = new ParseTree(e.e,null);
+//        e.generate(start);
+//        e.p = start;
+//        e.simplify(start);
+//        //final double result = e.result(start);
+//       // System.out.println(result);
+////        System.out.println(result);
+//        //a + b * c + d = 12
+//        //Double d = new Double(((Operator)e.contents.get(3)).operate(((Literal)e.contents.get(2)).getValue(),((Literal)e.contents.get(4)).getValue()));
+//        //String copy = a.replaceAll("\\s", "");
+//
+//
+//    }
 }
 

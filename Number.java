@@ -1,6 +1,6 @@
 package MathSpace;
 
-public class Number extends Literal{
+public class Number extends Literal {
     Double number;
     Number(double num){
         super(num);
@@ -34,5 +34,15 @@ public class Number extends Literal{
     @Override
     public double getValue() {
         return super.getValue();
+    }
+
+    public static Object nextChain(Object token){
+        return Expression.checkChain(token);
+    }
+    public static Object checkChain(Object token){
+        if(Utility.isNumber(token.toString()))
+            return new Number(Double.parseDouble(token.toString()));
+       // return new Number(token.toString());
+        else return nextChain(token);
     }
 }
