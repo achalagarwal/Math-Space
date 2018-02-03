@@ -12,11 +12,16 @@ public class Expression { //equation has variables, numbers and operators
     ArrayList<Object> tokens;
     ArrayList<Operator> outerOps;
     Expression(String a){
+        e = a;
 //         if(a.charAt(0)=='(' && a.charAt(a.length()-1)==')')
 //             a = a.substring(1,a.length()-1);
          t = new Tokenizer(a);
          tokens = new ArrayList<>();
          tokenify();
+        outerOps = new ArrayList<>();
+        updateOperators();
+        literals = new ArrayList<Literal>();
+        updateLiterals();
 //        literals = new ArrayList<Literal>();
 //        String copy = a.replaceAll("\\s","");
 //        this.e = copy;
@@ -31,6 +36,56 @@ public class Expression { //equation has variables, numbers and operators
             Object temp = Utility.getType(o);
             tokens.add(temp);
         }
+    }
+    public void updateLiterals(){
+        for(Object t:tokens) {
+            if (t instanceof Expression){
+                // this.literals.addAll(((Expression) t).literals);
+                for(Literal il:((Expression) t).literals){
+                    boolean flag = true;
+                    for(Literal l:literals){
+                        if(il.equals(l))
+                            flag = false;
+                    }
+                    if(flag)
+                        literals.add(il);
+                }
+            }
+        }
+        for(Object t:tokens){
+             if(t instanceof Literal){
+                if(!(t instanceof Number)){
+                    boolean flag= true;
+                    for(Literal l:literals){
+                        if(l.equals(t))
+                            flag = false;
+                    }
+                    if(flag)
+                    literals.add((Literal)t);
+                }
+            }
+        }
+        for(Object o:tokens){
+            if(o instanceof Expression){
+                for(int i = 0;i<((Expression) o).literals.size();i++){
+                    Literal il = ((Expression) o).literals.get(i);
+                    for(Literal l:literals){
+                        if(il.equals(l)){
+                            ((Expression) o).literals.remove(il);
+                            ((Expression) o).literals.add(i,l);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public void updateOperators(){
+
+        for(Object t:tokens){
+            if(t instanceof Operator)
+                outerOps.add((Operator) t);
+        }
+        outerOps.sort(new OperatorComparator());
     }
     private boolean hasObject(int i) {
         if (contents.size() <= i)
@@ -183,6 +238,7 @@ public class Expression { //equation has variables, numbers and operators
         return null;
     }
     public void generate( ParseTree n){
+
         if(n.value == null)
             return;
         String str = n.value.toString();

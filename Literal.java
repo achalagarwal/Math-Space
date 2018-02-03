@@ -105,4 +105,11 @@ public class Literal  {
         else
             return nextChain(token);
     }
+    public boolean equals(Object obj) {
+        if(obj instanceof Literal){
+            return ((Literal) obj).literal.equals(this.literal);
+        }
+        return (this == obj);
+    }
+
 }
