@@ -10,6 +10,13 @@ public class ParseTree {
     ParseTree parent;
     Object value;
     int level;
+    ParseTree(Object o){
+        this.value  = o;
+        this.left = null;
+        this.right = null;
+        this.parent = null;
+        level = 0;
+    }
     ParseTree(Object o, ParseTree parent) {
         this.value = o;
         this.left = null;
@@ -32,7 +39,12 @@ public class ParseTree {
     public Object getValue() {
         return value;
     }
-
+    public ParseTree getRoot(){
+        ParseTree p = this;
+        while(p.parent!=null)
+            p = p.parent;
+        return p;
+    }
     public boolean containsUnknowns(){
          if(this.value instanceof Literal){
             if(!((Literal) this.value).hasValue())
@@ -198,7 +210,7 @@ public class ParseTree {
         return max(a,b);
     }
     public static void main(String[] args) {
-        String a = "3+ 3*x +(4 - 3*x + 7 )";
+        String a = "3 + 3 * x + (4 - 3 * x + 7)";
         Expression expression = new Expression(a);
         //expression.p.simplify();
         int z  = expression.p.getHeight(0);

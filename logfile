@@ -1,0 +1,330 @@
+2018-02-03 20:09:58.334 IST [16292] LOG:  listening on IPv6 address "::1", port 5432
+2018-02-03 20:09:58.334 IST [16292] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2018-02-03 20:09:58.335 IST [16292] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2018-02-03 20:09:58.353 IST [16293] LOG:  database system was shut down at 2018-02-03 20:09:18 IST
+2018-02-03 20:09:58.357 IST [16292] LOG:  database system is ready to accept connections
+2018-02-03 20:10:01.561 IST [16339] FATAL:  database "achal" does not exist
+2018-02-03 20:10:14.089 IST [16407] FATAL:  role "root" does not exist
+2018-02-03 20:11:35.240 IST [16462] ERROR:  syntax error at or near "create" at character 22
+2018-02-03 20:11:35.240 IST [16462] STATEMENT:  create database test
+	create database test;
+2018-02-03 20:12:40.092 IST [16462] ERROR:  syntax error at or near "CREATE" at character 29
+2018-02-03 20:12:40.092 IST [16462] STATEMENT:  create database test
+	help
+	h
+	CREATE DATABASE test
+	CREATE DATABASE TEST;
+2018-02-03 20:13:17.038 IST [16562] FATAL:  database "achal" does not exist
+2018-02-03 20:15:34.796 IST [17154] ERROR:  source database "template1" is being accessed by other users
+2018-02-03 20:15:34.796 IST [17154] DETAIL:  There is 1 other session using the database.
+2018-02-03 20:15:34.796 IST [17154] STATEMENT:  CREATE DATABASE achal;
+2018-02-03 20:45:46.670 IST [17837] FATAL:  database "achal" does not exist
+2018-02-03 20:49:19.338 IST [17940] FATAL:  database "untitled_database" does not exist
+2018-02-03 20:49:23.499 IST [17879] ERROR:  source database "template1" is being accessed by other users
+2018-02-03 20:49:23.499 IST [17879] DETAIL:  There is 1 other session using the database.
+2018-02-03 20:49:23.499 IST [17879] STATEMENT:  CREATE DATABASE "untitled_database"
+2018-02-03 20:49:36.962 IST [17879] ERROR:  cannot drop a template database
+2018-02-03 20:49:36.962 IST [17879] STATEMENT:  DROP DATABASE "template1"
+2018-02-03 20:49:51.265 IST [17953] FATAL:  database "Learn" does not exist
+2018-02-03 20:49:53.488 IST [17954] FATAL:  database "Learn" does not exist
+2018-02-03 20:49:54.723 IST [17879] ERROR:  source database "template1" is being accessed by other users
+2018-02-03 20:49:54.723 IST [17879] DETAIL:  There is 1 other session using the database.
+2018-02-03 20:49:54.723 IST [17879] STATEMENT:  CREATE DATABASE "Learn"
+2018-02-03 20:52:36.704 IST [17999] FATAL:  database "Learn" does not exist
+2018-02-03 20:52:48.540 IST [18003] FATAL:  database "Learn" does not exist
+2018-02-03 20:52:54.554 IST [18005] FATAL:  database "Learn" does not exist
+2018-02-03 20:53:15.107 IST [18011] FATAL:  database "Learn" does not exist
+2018-02-03 20:53:40.543 IST [18043] FATAL:  database "Learn" does not exist
+2018-02-03 20:53:41.414 IST [17879] ERROR:  source database "template1" is being accessed by other users
+2018-02-03 20:53:41.414 IST [17879] DETAIL:  There is 1 other session using the database.
+2018-02-03 20:53:41.414 IST [17879] STATEMENT:  CREATE DATABASE "Learn"
+2018-02-03 20:53:42.445 IST [18044] FATAL:  database "Learn" does not exist
+2018-02-03 20:53:44.698 IST [18045] FATAL:  database "Learn" does not exist
+2018-02-03 20:53:52.970 IST [18053] FATAL:  database "Learn" does not exist
+2018-02-03 20:54:11.956 IST [17879] ERROR:  source database "template1" is being accessed by other users
+2018-02-03 20:54:11.956 IST [17879] DETAIL:  There is 1 other session using the database.
+2018-02-03 20:54:11.956 IST [17879] STATEMENT:  CREATE DATABASE "learn"
+2018-02-03 20:54:32.647 IST [17879] ERROR:  source database "template1" is being accessed by other users
+2018-02-03 20:54:32.647 IST [17879] DETAIL:  There is 1 other session using the database.
+2018-02-03 20:54:32.647 IST [17879] STATEMENT:  CREATE DATABASE "learn"
+2018-02-03 20:55:47.469 IST [17879] ERROR:  source database "template1" is being accessed by other users
+2018-02-03 20:55:47.469 IST [17879] DETAIL:  There is 1 other session using the database.
+2018-02-03 20:55:47.469 IST [17879] STATEMENT:  CREATE DATABASE "Learn"
+2018-02-03 20:56:05.336 IST [17879] ERROR:  source database "template1" is being accessed by other users
+2018-02-03 20:56:05.336 IST [17879] DETAIL:  There is 1 other session using the database.
+2018-02-03 20:56:05.336 IST [17879] STATEMENT:  CREATE DATABASE "Learn"
+2018-02-03 20:56:08.903 IST [18549] FATAL:  database "Learn" does not exist
+2018-02-03 20:56:20.955 IST [18551] FATAL:  database "Learn" does not exist
+2018-02-03 20:56:21.618 IST [18552] FATAL:  database "Learn" does not exist
+2018-02-03 20:56:22.967 IST [18553] FATAL:  database "Learn" does not exist
+2018-02-03 20:56:22.981 IST [18554] FATAL:  database "Learn" does not exist
+2018-02-03 20:57:17.251 IST [16683] ERROR:  syntax error at or near "" at character 1
+2018-02-03 20:57:17.251 IST [16683] STATEMENT:  
+	CREATE DATABASE dbname;
+2018-02-03 20:57:27.130 IST [16683] ERROR:  database "dbname" already exists
+2018-02-03 20:57:27.130 IST [16683] STATEMENT:  CREATE DATABASE dbname;
+2018-02-03 20:57:40.159 IST [16683] ERROR:  database "dbname" already exists
+2018-02-03 20:57:40.159 IST [16683] STATEMENT:  CREATE DATABASE dbname TEMPLATE template0;
+2018-02-03 20:57:41.064 IST [16683] ERROR:  database "dbname" already exists
+2018-02-03 20:57:41.064 IST [16683] STATEMENT:  CREATE DATABASE dbname TEMPLATE template0;
+2018-02-03 20:57:45.341 IST [16683] ERROR:  syntax error at or near ";" at character 35
+2018-02-03 20:57:45.341 IST [16683] STATEMENT:  CREATE DATABASE TEMPLATE template0;
+2018-02-03 20:57:46.883 IST [16683] ERROR:  syntax error at or near ";" at character 35
+2018-02-03 20:57:46.883 IST [16683] STATEMENT:  CREATE DATABASE TEMPLATE template0;
+2018-02-03 21:01:06.423 IST [18857] ERROR:  function getdate() does not exist
+2018-02-03 21:01:06.423 IST [18857] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+2018-02-03 21:01:06.423 IST [18857] STATEMENT:  
+	ALTER TABLE employees ADD FOREIGN KEY (deptcode) REFERENCES departments(code);
+	
+	CREATE TABLE projects (
+	  projectid CHAR(8) NOT NULL,
+	  deptcode CHAR(5),
+	  description VARCHAR(200),
+	  startdate DATE DEFAULT GETDATE(),
+	  enddate DATE,
+	  revenue NUMERIC(12, 2),
+	  PRIMARY KEY(projectid),
+	  FOREIGN KEY(deptcode) REFERENCES departments(code)
+	);
+	
+	CREATE TABLE workson (
+	  employeeid NUMERIC(9) NOT NULL,
+	  projectid CHAR(8) NOT NULL,
+	  assignedtime DECIMAL(3,2),
+	  PRIMARY KEY(employeeid, projectid),
+	  FOREIGN KEY(employeeid) REFERENCES employees(employeeid),
+	  FOREIGN KEY(projectid) REFERENCES projects(projectid)
+	);
+	
+	INSERT INTO departments VALUES ('ADMIN', 'Administration', NULL, NULL);
+	INSERT INTO departments VALUES ('ACCNT', 'Accounting', NULL, 'ADMIN');
+	INSERT INTO departments VALUES ('CNSLT', 'Consulting', NULL, 'ADMIN');
+	INSERT INTO departments VALUES ('HDWRE', 'Hardware', NULL, 'CNSLT');
+	
+	INSERT INTO employees VALUES (1, 'Al', 'Betheleader', 'ADMIN', 70000);
+	INSERT INTO employees VALUES (2, 'PI', 'Rsquared', 'ACCNT', 40000);
+	INSERT INTO employees VALUES (3, 'Harry', 'Hardware', 'HDWRE', 50000);
+	INSERT INTO employees VALUES (4, 'Sussie', 'Software', 'CNSLT', 60000);
+	INSERT INTO employees VALUES (5, 'Abe', 'Advice', 'CNSLT', 30000);
+	INSERT INTO employees VALUES (6, 'Hardly', 'Aware', NULL, 65000);
+	
+	UPDATE departments SET managerid = 1 WHERE code = 'ADMIN';
+	UPDATE departments SET managerid = 2 WHERE code = 'ACCNT';
+	UPDATE departments SET managerid = 3 WHERE code = 'HDWRE';
+	UPDATE departments SET managerid = 4 WHERE code = 'CNSLT';
+	
+	INSERT INTO projects VALUES ('EMPHAPPY', 'ADMIN', 'Employee Moral', '14-MAR-2002', NULL, 0);
+	INSERT INTO projects VALUES ('ROBOSPSE', 'CNSLT', 'Robotic Spouse', '14-MAR-2002', NULL, 200000);
+	INSERT INTO projects VALUES ('ADT4MFIA', 'ACCNT', 'Mofia Audit', '03-JUL-2003', '30-NOV-2003', 100000);
+	INSERT INTO PROJECTS VALUES ('DNLDCLNT', 'CNSLT', 'Download Client', '03-FEB-2005', NULL, 15000);
+	
+	INSERT INTO workson VALUES (2, 'ADT4MFIA', 0.50);
+	INSERT INTO workson VALUES (3, 'ROBOSPSE', 0.75);
+	INSERT INTO workson VALUES (4, 'ROBOSPSE', 0.75);
+	INSERT INTO workson VALUES (5, 'ROBOSPSE', 0.50);
+	INSERT INTO workson VALUES (5, 'ADT4MFIA', 0.60);
+	INSERT INTO workson VALUES (3, 'DNLDCLNT', 0.25);
+	
+2018-02-03 21:16:52.291 IST [18857] ERROR:  argument of AND must be type boolean, not type character varying at character 8
+2018-02-03 21:16:52.291 IST [18857] STATEMENT:  select employees.firstname and employees.lastname as "NAME"
+	from employees
+	
+2018-02-03 21:16:55.650 IST [18857] ERROR:  operator does not exist: character varying + character varying at character 28
+2018-02-03 21:16:55.650 IST [18857] HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+2018-02-03 21:16:55.650 IST [18857] STATEMENT:  select employees.firstname + employees.lastname as "NAME"
+	from employees
+	
+2018-02-03 21:17:02.074 IST [18857] ERROR:  syntax error at or near "employees" at character 35
+2018-02-03 21:17:02.074 IST [18857] STATEMENT:  select employees.firstname concat employees.lastname as "NAME"
+	from employees
+	
+2018-02-03 21:17:37.245 IST [18857] ERROR:  column " " does not exist at character 31
+2018-02-03 21:17:37.245 IST [18857] STATEMENT:  select employees.firstname || " " || employees.lastname as "NAME"
+	from employees
+	
+2018-02-03 21:18:14.517 IST [18857] ERROR:  unterminated quoted identifier at or near ""NAME'
+	from employees
+	" at character 60
+2018-02-03 21:18:14.517 IST [18857] STATEMENT:  select employees.firstname || ' ' || employees.lastname as "NAME'
+	from employees
+	
+2018-02-03 21:18:18.570 IST [18857] ERROR:  syntax error at or near "'NAME'" at character 60
+2018-02-03 21:18:18.570 IST [18857] STATEMENT:  select employees.firstname || ' ' || employees.lastname as 'NAME'
+	from employees
+	
+2018-02-03 21:22:54.698 IST [18857] ERROR:  syntax error at or near "SELECT" at character 83
+2018-02-03 21:22:54.698 IST [18857] STATEMENT:  select employees.firstname || ' ' || employees.lastname as "NAME"
+	from employees
+	
+	SELECT projects.deptcode DISTINCT
+	from projects
+	
+	
+2018-02-03 21:23:11.494 IST [18857] ERROR:  syntax error at or near "SELECT" at character 83
+2018-02-03 21:23:11.494 IST [18857] STATEMENT:  select employees.firstname || ' ' || employees.lastname as "NAME"
+	from employees
+	
+	SELECT DISTINCT projects.deptcode 
+	from projects
+	
+	
+2018-02-03 21:23:33.893 IST [18857] ERROR:  syntax error at or near "DISTINCT" at character 26
+2018-02-03 21:23:33.893 IST [18857] STATEMENT:  SELECT projects.deptcode DISTINCT
+	from projects;
+2018-02-03 21:26:35.187 IST [18857] ERROR:  operator does not exist: integer || interval at character 46
+2018-02-03 21:26:35.187 IST [18857] HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+2018-02-03 21:26:35.187 IST [18857] STATEMENT:  SELECT projects.projectid, enddate-startdate || now()-startdate
+	from projects;
+2018-02-03 21:26:43.602 IST [18857] ERROR:  syntax error at or near "now" at character 53
+2018-02-03 21:26:43.602 IST [18857] STATEMENT:  SELECT projects.projectid, enddate-startdate CONCAT now()-startdate
+	from projects;
+2018-02-03 21:26:49.885 IST [18857] ERROR:  syntax error at or near "now" at character 53
+2018-02-03 21:26:49.885 IST [18857] STATEMENT:  SELECT projects.projectid, enddate-startdate CONCAT now()
+	from projects;
+2018-02-03 21:27:47.715 IST [18857] ERROR:  syntax error at or near "." at character 33
+2018-02-03 21:27:47.715 IST [18857] STATEMENT:  SELECT projects.revenue projects.projectid
+	from projects;
+2018-02-03 21:29:05.642 IST [18857] ERROR:  column "year" does not exist at character 17
+2018-02-03 21:29:05.642 IST [18857] STATEMENT:  select distinct YEAR
+	from projects
+	
+	
+	
+2018-02-03 21:29:05.899 IST [18857] ERROR:  column "year" does not exist at character 17
+2018-02-03 21:29:05.899 IST [18857] STATEMENT:  select distinct YEAR
+	from projects
+	
+	
+	
+2018-02-03 21:41:49.481 IST [18857] ERROR:  syntax error at or near "when" at character 43
+2018-02-03 21:41:49.481 IST [18857] STATEMENT:  select employeeid
+	from workson, employees
+	when workson.employeeid = employees.employeeid
+	
+2018-02-03 21:41:53.062 IST [18857] ERROR:  syntax error at or near "when" at character 43
+2018-02-03 21:41:53.062 IST [18857] STATEMENT:  select employeeid
+	from workson, employees
+	when workson.employeeid == employees.employeeid
+	
+2018-02-03 21:41:58.663 IST [18857] ERROR:  column reference "employeeid" is ambiguous at character 8
+2018-02-03 21:41:58.663 IST [18857] STATEMENT:  select employeeid
+	from workson, employees
+	where workson.employeeid == employees.employeeid
+	
+2018-02-03 21:42:07.582 IST [18857] ERROR:  operator does not exist: numeric == numeric at character 78
+2018-02-03 21:42:07.582 IST [18857] HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+2018-02-03 21:42:07.582 IST [18857] STATEMENT:  select employees.employeeid
+	from workson, employees
+	where workson.employeeid == employees.employeeid
+	
+2018-02-03 21:43:38.457 IST [18857] ERROR:  syntax error at or near "case" at character 1
+2018-02-03 21:43:38.457 IST [18857] STATEMENT:  case 
+	when workson.employeeid > 0.33 then 'wow'
+	end as "hi"
+	select distinct employees.employeeid
+	from workson, employees
+	where workson.employeeid = employees.employeeid
+	
+	
+2018-02-03 21:43:57.246 IST [18857] ERROR:  syntax error at or near "case" at character 110
+2018-02-03 21:43:57.246 IST [18857] STATEMENT:  select distinct employees.employeeid
+	from workson, employees
+	where workson.employeeid = employees.employeeid
+	case 
+	when workson.employeeid > 0.33 then 'wow'
+	end as "hi"
+	
+	
+2018-02-03 21:46:36.169 IST [18857] ERROR:  syntax error at or near "<" at character 131
+2018-02-03 21:46:36.169 IST [18857] STATEMENT:  select distinct employees.employeeid,
+	case 
+	when workson.assignedtime <0.33 then 'part-time'
+	when workson.assignedtime >=0.33 and < 0.67 then 'split time'
+	when workson.assignedtime >=0.67 then 'full-time'
+	end as "hi"
+	
+	from workson, employees
+	where workson.employeeid = employees.employeeid
+	
+	
+2018-02-03 21:46:56.490 IST [18857] ERROR:  syntax error at or near "<" at character 137
+2018-02-03 21:46:56.490 IST [18857] STATEMENT:  select distinct employees.employeeid,
+	case 
+	when workson.assignedtime <0.33 then 'part-time'
+	when workson.assignedtime between 0.33 and < 0.67 then 'split time'
+	when workson.assignedtime >=0.67 then 'full-time'
+	end as "hi"
+	
+	from workson, employees
+	where workson.employeeid = employees.employeeid
+	
+	
+2018-02-03 21:53:38.933 IST [18857] ERROR:  syntax error at or near "," at character 26
+2018-02-03 21:53:38.933 IST [18857] STATEMENT:  SELECT convert(varchar(3),projects.description)
+	from projects
+	
+	
+	
+2018-02-03 21:53:56.069 IST [18857] ERROR:  syntax error at or near "," at character 26
+2018-02-03 21:53:56.069 IST [18857] STATEMENT:  SELECT convert(varchar(3),projects.description) as "a"
+	from projects
+	
+	
+	
+2018-02-03 22:00:45.744 IST [18857] ERROR:  syntax error at or near "cast" at character 14
+2018-02-03 22:00:45.744 IST [18857] STATEMENT:  SELECT upper cast(projects.description as varchar(3))||'-'||projects.deptcode
+	from projects
+	
+	
+	
+2018-02-03 22:02:56.389 IST [18857] ERROR:  column "year" does not exist at character 70
+2018-02-03 22:02:56.389 IST [18857] STATEMENT:  SELECT projects.projectid, projects.startdate
+	from projects
+	order by YEAR
+	
+2018-02-03 22:03:07.184 IST [18857] ERROR:  function year(date) does not exist at character 70
+2018-02-03 22:03:07.184 IST [18857] HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+2018-02-03 22:03:07.184 IST [18857] STATEMENT:  SELECT projects.projectid, projects.startdate
+	from projects
+	order by year(projects.startdate)
+	
+2018-02-03 22:04:57.299 IST [18857] ERROR:  syntax error at or near "from" at character 85
+2018-02-03 22:04:57.299 IST [18857] STATEMENT:  SELECT projects.projectid, projects.startdate
+	from projects
+	order by date_part(year from projects.startdate)
+2018-02-03 22:05:26.390 IST [18857] ERROR:  syntax error at or near "from" at character 87
+2018-02-03 22:05:26.390 IST [18857] STATEMENT:  SELECT projects.projectid, projects.startdate
+	from projects
+	order by date_part('year' from projects.startdate)
+2018-02-03 22:05:34.469 IST [18857] ERROR:  column "year" does not exist at character 80
+2018-02-03 22:05:34.469 IST [18857] STATEMENT:  SELECT projects.projectid, projects.startdate
+	from projects
+	order by date_part(year, projects.startdate)
+2018-02-03 22:06:00.722 IST [18857] ERROR:  syntax error at or near ")" at character 106
+2018-02-03 22:06:00.722 IST [18857] STATEMENT:  SELECT projects.projectid, projects.startdate
+	from projects
+	order by date_part('year',projects.startdate))
+2018-02-03 22:06:20.567 IST [18857] ERROR:  relation "project" does not exist at character 52
+2018-02-03 22:06:20.567 IST [18857] STATEMENT:  SELECT projects.projectid, projects.startdate
+	from project
+	--order by date_part('year',projects.startdate)
+2018-02-03 22:09:35.797 IST [18857] ERROR:  missing FROM-clause entry for table "employees" at character 8
+2018-02-03 22:09:35.797 IST [18857] STATEMENT:  select employees.lastname, employees.salary*105/100 as "SALARY"
+	where SALARY > 50000
+2018-02-03 22:15:37.585 IST [18857] ERROR:  column "HDWARE" does not exist at character 161
+2018-02-03 22:15:37.585 IST [18857] STATEMENT:  SELECT employees.employeeid, employees.firstname, employees.lastname, employees.salary*110/100 as "Next Year Salary"
+	from employees
+	where employees.deptcode == "HDWARE"
+	
+2018-02-03 22:15:41.190 IST [18857] ERROR:  column "HDWARE" does not exist at character 160
+2018-02-03 22:15:41.190 IST [18857] STATEMENT:  SELECT employees.employeeid, employees.firstname, employees.lastname, employees.salary*110/100 as "Next Year Salary"
+	from employees
+	where employees.deptcode = "HDWARE"
+	
+2018-02-03 22:21:33.828 IST [20556] FATAL:  database "Learn" does not exist
+2018-02-03 22:21:37.099 IST [20558] FATAL:  database "Learn" does not exist
+2018-02-03 22:21:39.260 IST [20560] FATAL:  database "Learn" does not exist
+2018-02-03 22:21:56.908 IST [20567] FATAL:  database "Learn" does not exist
+2018-02-03 22:22:02.228 IST [20570] FATAL:  database "Learn" does not exist
+2018-02-03 22:22:03.015 IST [20571] FATAL:  database "Learn" does not exist
+2018-02-03 22:22:03.078 IST [20572] LOG:  incomplete startup packet

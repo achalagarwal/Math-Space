@@ -1,4 +1,6 @@
 package MathSpace;
+import org.apache.commons.math3.analysis.function.Exp;
+
 import java.util.*;
 public class Expression { //equation has variables, numbers and operators
     //private Object contents[];
@@ -11,6 +13,8 @@ public class Expression { //equation has variables, numbers and operators
     Tokenizer t;
     ArrayList<Object> tokens;
     ArrayList<Operator> outerOps;
+    boolean hasResult = false;
+    double result = 0.0;
     Expression(String a){
         e = a;
 //         if(a.charAt(0)=='(' && a.charAt(a.length()-1)==')')
@@ -22,6 +26,9 @@ public class Expression { //equation has variables, numbers and operators
         updateOperators();
         literals = new ArrayList<Literal>();
         updateLiterals();
+        linkify();
+        getResult();
+
 //        literals = new ArrayList<Literal>();
 //        String copy = a.replaceAll("\\s","");
 //        this.e = copy;
@@ -36,6 +43,19 @@ public class Expression { //equation has variables, numbers and operators
             Object temp = Utility.getType(o);
             tokens.add(temp);
         }
+    }
+    public void getResult(){
+        for(Object o:tokens){
+            if(o instanceof Expression){
+                if(!((Expression) o).hasResult){
+                    this.hasResult = false;
+                    return;
+                }
+            }
+        }
+        this.hasResult = true;
+        result = result(p);
+        //parse and get result;
     }
     public void updateLiterals(){
         for(Object t:tokens) {
@@ -78,6 +98,32 @@ public class Expression { //equation has variables, numbers and operators
                 }
             }
         }
+    }
+
+    public void linkify(){
+        ParseTree parray[] = new ParseTree[tokens.size()];
+        for(Operator o:outerOps){
+            int index = tokens.indexOf(o);
+            p = new ParseTree(o);
+            parray[index]=p;
+            if(parray[index-1]!=null){
+                p.left = parray[index-1].getRoot();
+                parray[index-1].getRoot().parent = p;
+            }
+            else {
+                p.left = new ParseTree(tokens.get(index - 1), p);
+                parray[index - 1] = p.left;
+            }
+            if(parray[index+1]!=null){
+                p.right = parray[index+1].getRoot();
+                parray[index+1].getRoot().parent = p;
+            }
+            else {
+                p.right = new ParseTree(tokens.get(index+1), p);
+                parray[index+1] = p.right;
+            }
+        }
+
     }
     public void updateOperators(){
 
@@ -357,8 +403,10 @@ public class Expression { //equation has variables, numbers and operators
         }
         else if(p.value instanceof Number)
             return ((Number) p.value).getValue();
-        else
-            return 0.0;
+        else if(p.value instanceof Expression){
+            return ((Expression) p.value).result;
+        }
+        else return 0.0;
     }
     public static Object nextChain(Object str){
         return null; //equation
