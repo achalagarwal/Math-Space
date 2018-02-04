@@ -1,6 +1,6 @@
 # MathSpace
 
-## An opensource mathematical workspace for individuals, schools and organisations alike.
+## An open source mathematical workspace for individuals, schools and organisations alike.
 
 Built purely on Java, this is a unique tool which solves many difficulties. 
 
@@ -19,6 +19,8 @@ x + y
 
 4.26138
 9.73861
+
+------------------------------------------------------------------------------------------------------------------------------
 
 
 Not limited to solving equations and calculating expressions, mathspace is modular and hence can be extensively used in various fields.
