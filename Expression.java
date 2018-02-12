@@ -9,6 +9,7 @@ public class Expression { //equation has variables, numbers and operators
     private LinkedList<Object> contents = new LinkedList<>();
     //private boolean arr[]; //copy.length
     String e;
+    boolean hasUnknowns;
     ParseTree p;
     Tokenizer t;
     ArrayList<Object> tokens;
@@ -28,6 +29,8 @@ public class Expression { //equation has variables, numbers and operators
         updateLiterals();
         linkify();
         getResult();
+//clean your tokens and keep only subexpressions because all usages of tokens except the recursive call have an if token.getElement is Expression
+
 
 //        literals = new ArrayList<Literal>();
 //        String copy = a.replaceAll("\\s","");
@@ -45,27 +48,50 @@ public class Expression { //equation has variables, numbers and operators
         }
     }
     public void getResult(){
-        for(Object o:tokens){
-            if(o instanceof Expression){
-                if(!((Expression) o).hasResult){
-                    this.hasResult = false;
-                    return;
-                }
+        hasUnknowns = false;
+        for(Literal l:literals){
+            if(!l.hasValue()){
+                hasUnknowns = true;
+                break;
             }
         }
-        this.hasResult = true;
-        result = result(p);
+        if(!hasUnknowns) {
+            for (Object o : tokens) {
+                if (o instanceof Expression) {
+                    if (!((Expression) o).hasResult) {
+                        this.hasResult = false;
+                        return;
+                    }
+                }
+            }
+
+            this.hasResult = true;
+            result = result(p);
+        }
+        else
+            this.hasResult = false;
         //parse and get result;
     }
+
     public void updateLiterals(){
         for(Object t:tokens) {
             if (t instanceof Expression){
                 // this.literals.addAll(((Expression) t).literals);
-                for(Literal il:((Expression) t).literals){
+                for(int j = 0;j<((Expression) t).literals.size();j++){
+                    Literal il = ((Expression) t).literals.get(j);
                     boolean flag = true;
-                    for(Literal l:literals){
-                        if(il.equals(l))
+//                    for(Literal l:literals){
+//                        if(il.equals(l))
+//                            flag = false;
+//                    }
+                    for(int i = 0;i<literals.size();i++){
+                        Literal l = literals.get(i);
+                        if(il.equals(l)) {
                             flag = false;
+                            ((Expression) t).literals.remove(j);
+                            ((Expression) t).literals.add(j,l);
+                            break;
+                        }
                     }
                     if(flag)
                         literals.add(il);
@@ -122,6 +148,9 @@ public class Expression { //equation has variables, numbers and operators
                 p.right = new ParseTree(tokens.get(index+1), p);
                 parray[index+1] = p.right;
             }
+        }
+        if(p==null){
+            p = new ParseTree(tokens.get(0));
         }
 
     }
@@ -392,6 +421,7 @@ public class Expression { //equation has variables, numbers and operators
 
     public static double result(ParseTree p){ //assuming contains no unknowns
         double result = 0;
+
         if(p.value instanceof Operator)
             return ((Operator)p.value).operate(result(p.left),result(p.right));
         else if(p.value instanceof Literal){
@@ -418,7 +448,8 @@ public class Expression { //equation has variables, numbers and operators
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String a = sc.nextLine();
-        Expression e = new Expression(a);
+        Object f = Operator.checkChain(a);
+      //  Expression e = new Expression(a);
         System.out.println("Done");
     }
 
