@@ -26,12 +26,13 @@ public class Tokenizer {
                     ch = sentence.charAt(j);
                     if (ch == '(')
                         count++;
-                    else if (ch == ')' && count == 1)
+                    else if (ch == ')' && count == 1) {
+                        count = 0;
                         break;
+                    }
                     else if (ch == ')' && count > 1)
                         count--;
-                    else
-                        buffer.append(sentence.charAt(j));
+                    buffer.append(sentence.charAt(j));
                 }
                 i = j;
                 tokens.add(buffer.toString());
