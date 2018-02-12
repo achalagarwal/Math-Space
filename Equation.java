@@ -14,6 +14,7 @@ public class Equation {
     Equation(Expression l, Expression r){
         this.left = l;
         this.right = r;
+
     }
     public static boolean isEquation(String a){
         int l = a.lastIndexOf('=');
@@ -98,6 +99,17 @@ public class Equation {
             }
         }
         return false;
+    }
+    public static Object nextChain(Object token){
+        return Expression.checkChain(token);
+    }
+    public static Object checkChain(Object token){
+        int l = token.toString().lastIndexOf('=');
+        int f = token.toString().indexOf('=');
+        if(l==f && l!=-1)
+            return (new Equation(new Expression(token.toString().substring(0,l)),new Expression(token.toString().substring(l+1,token.toString().length()))));
+        else
+            return nextChain(token);
     }
     public static void main(String[] args){
 //        Scanner sc = new Scanner(System.in);
