@@ -37,7 +37,7 @@ public class Number extends Literal {
     }
 
     public static Object nextChain(Object token){
-        return Expression.checkChain(token);
+        return Equation.checkChain(token);
     }
     public static Object checkChain(Object token){
         if(Utility.isNumber(token.toString()))
