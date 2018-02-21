@@ -1,9 +1,19 @@
 package MathSpace;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static java.lang.Integer.max;
-
+class PwithH{
+    ParseTree p;
+    int height;
+    PwithH(ParseTree p, int h){
+        this.p = p;
+        this.height = h;
+    }
+}
 public class ParseTree {
     ParseTree left;
     ParseTree right;
@@ -183,7 +193,53 @@ public class ParseTree {
             System.out.println();
         }
     }
+    public String toString(){
 
+        return this.value.toString();
+    }
+    public void printHelper(){
+        ArrayList<PwithH> test = new ArrayList<>();
+        this.stack(test, 0);
+        Collections.sort(test, new Comparator<PwithH>() {
+            @Override
+            public int compare(PwithH o1, PwithH o2) {
+                if (o1.height < o2.height)
+                    return -1;
+                else
+                    return 1;
+            }
+        });
+        int flag = 1;
+        int priority = 0;
+        while (flag != 0) {
+            flag = 0;
+            for (int j = 0; j < test.size(); j++) {
+                PwithH t = test.get(j);
+                if (t.height == priority) {
+                    System.out.print(t.p.toString() + "\t");
+                    flag = 1;
+                }
+            }
+            System.out.println("\n");
+            priority++;
+        }
+        System.out.println();
+    }
+    public void stack(ArrayList<PwithH> stack, int h){
+        if(this.left!=null)
+            this.left.stack(stack,h+1);
+        if(this.right!=null)
+            this.right.stack(stack,h+1);
+        if(this.value instanceof Expression)
+            ((Expression) this.value).p.stack(stack,h);
+        else
+        stack.add(new PwithH(this,h));
+        //stack.add(this.right.toString());
+
+        //this.left.stack(stack);
+        //this.right.
+
+    }
     public String[][] magic(String[][] str,int[] count){
         str[this.level][count[this.level]] = this.value.toString();
         count[this.level]++;
