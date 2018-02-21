@@ -147,12 +147,12 @@ public class Operator {
     }
 
 
-    public static Object nextChain(Object token) {
+    public static Object nextChain(Object token) throws Exception {
         return Literal.checkChain(token);
     }
 
 
-    public static Object checkChain(Object token) {
+    public static Object checkChain(Object token) throws Exception {
         String str = token.toString();
         if(Utility.isValidOperator(str.charAt(0)))
             return new Operator(str.charAt(0));

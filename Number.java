@@ -36,10 +36,10 @@ public class Number extends Literal {
         return super.getValue();
     }
 
-    public static Object nextChain(Object token){
+    public static Object nextChain(Object token) throws Exception {
         return Equation.checkChain(token);
     }
-    public static Object checkChain(Object token){
+    public static Object checkChain(Object token) throws Exception{
         if(Utility.isNumber(token.toString()))
             return new Number(Double.parseDouble(token.toString()));
        // return new Number(token.toString());

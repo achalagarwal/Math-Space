@@ -92,11 +92,11 @@ public class Literal  {
         this.hasValue = true;
     }
 
-    public static Object nextChain(Object token) {
+    public static Object nextChain(Object token) throws Exception{
         return Number.checkChain(token);
     }
 
-    public static Object checkChain(Object token) {
+    public static Object checkChain(Object token) throws Exception {
         String str = token.toString();
         if(isLiteral(str)) {
             Literal l = new Literal(str);
