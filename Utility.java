@@ -1,4 +1,7 @@
 package MathSpace;
+
+import java.util.ArrayList;
+
 final class Utility{
 
     public static boolean isAlphabet(char token){
@@ -29,6 +32,34 @@ final class Utility{
                 return false;
         }
         return true;
+    }
+    public static void literalUnify(ArrayList<Literal> list1, ArrayList<Literal> list2) throws Exception {
+        for(int j = 0;j<list1.size();j++){
+            Literal l = list1.get(j);
+            for(int i = 0;i<list2.size();i++){
+                Literal l2 = list2.get(i);
+                if(l.equals(l2)){
+                    if(l2.hasValue()&&l.hasValue()){
+                        if(l2.getValue()!=l.getValue())
+                            throw new Exception("Value Mismatch Exception");
+                        else {
+                            list2.remove(i);
+                            list2.add(i,l);
+                            break;
+                        }
+                    }
+                    if(l2.hasValue()){
+                        list1.remove(j);
+                        list1.add(j,l2);
+                    }
+                    else {
+                    //Literal t = l2.hasValue() ? l : l2;
+                        list2.remove(i);
+                        list2.add(i, l);
+                    }
+                }
+            }
+        }
     }
     public static boolean isValidOperator(char token){
         if(token=='-'||token=='+'||token=='/'||token=='*'||token=='%'||token=='^')
@@ -63,7 +94,7 @@ final class Utility{
         }
         return true;
     }
-    public static Object getType(Object token){
+    public static Object getType(Object token) throws Exception{
         return Operator.checkChain(token);
     }
 
