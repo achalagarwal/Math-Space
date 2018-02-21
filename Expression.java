@@ -1,8 +1,9 @@
 package MathSpace;
 import org.apache.commons.math3.analysis.function.Exp;
+import org.apache.commons.math3.linear.RealMatrix;
 
 import java.util.*;
-public class Expression { //equation has variables, numbers and operators
+public class Expression extends Token{ //equation has variables, numbers and operators
     //private Object contents[];
     Scanner sc = new Scanner(System.in);
     ArrayList<Literal> literals;
@@ -41,9 +42,32 @@ public class Expression { //equation has variables, numbers and operators
 //        getUnknowns();
 //        // arr = new boolean[copy.length()];
     }
-    public void tokenify(){
+
+    public void recurseLiterals() {
+        for(Object exp:tokens){
+            if(exp instanceof Expression){
+                for(int i = 0;i<((Expression) exp).literals.size();i++){
+                    Literal l1= ((Expression) exp).literals.get(i);
+                    for(int j =  0;j<this.literals.size();j++){
+                        Literal l2 = this.literals.get(j);
+                        if(l1.equals(l2)){
+                            ((Expression) exp).literals.remove(i);
+                            ((Expression) exp).literals.add(i,l2);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+        public void tokenify (){
         for(Object o:t.tokens){
-            Object temp = Utility.getType(o);
+            Object temp = null;
+            try {
+                temp = Utility.getType(o);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
             tokens.add(temp);
         }
     }
@@ -419,6 +443,12 @@ public class Expression { //equation has variables, numbers and operators
         return flag;
     }
 
+//    public double getLiteralCoeff(){ //assumes linear
+//       if(p.value instanceof Operator)
+//
+//        }
+//        return 0;
+//    }
     public static double result(ParseTree p){ //assuming contains no unknowns
         double result = 0;
 
@@ -445,12 +475,48 @@ public class Expression { //equation has variables, numbers and operators
         return new Expression(str.toString());
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String a = sc.nextLine();
+    public static void main(String[] args) throws Exception {
+        // Scanner sc = new Scanner(System.in);
+        String a = "(x + y + z * 7) - (3 * (x - y)) = 5";
         Object f = Operator.checkChain(a);
-      //  Expression e = new Expression(a);
+        String a2 = "(2 * x) + (3 * y) - z = 7 * (z - 2 + x)";
+        Object f2 = Operator.checkChain(a2);
+        //  Expression e = new Expression(a2);
         System.out.println("Done");
+        assert f instanceof Equation;
+        assert f2 instanceof Equation;
+        ArrayList<Equation> eqs = new ArrayList<Equation>();
+        eqs.add((Equation) f);
+        eqs.add((Equation) f2);
+        RealMatrix rm = Equation.coeffecients(eqs);
+        System.out.println("aja");
+
+
+        System.out.println("aja");
+        /*
+            this is test code for parse tree print
+         */
+
+    }
+    public static void tester(ArrayList<Object> stack,int pos){
+        int buffer = 0;
+        ArrayList<Object> tetet = new ArrayList<>();
+        tetet.add(stack.get(pos));
+        int i=0;
+        if(stack.get(pos) instanceof Operator){
+            i = pos;
+            tetet.add(stack.get(i-1));
+
+        }
+        for(;i>=0;i--){
+            if(stack.get(i) instanceof Literal)
+                buffer--;
+            if(buffer == -1){
+                stack.add(stack.get(i));
+            }
+            if(stack.get(i) instanceof Operator)
+                buffer++;
+        }
     }
 
 //    public static void main(String[] args){
