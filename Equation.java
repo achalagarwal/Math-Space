@@ -4,17 +4,20 @@ import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class Equation {
     Expression left;
     Expression right;
-    Equation(Expression l, Expression r){
+    Set<Literal> vars = new HashSet<>();
+    Equation(Expression l, Expression r) throws Exception {
         this.left = l;
         this.right = r;
-
+        Utility.literalUnify(l.literals,r.literals);
+        vars.addAll(l.literals);
+        vars.addAll(r.literals);
+        l.recurseLiterals();
+        r.recurseLiterals();
     }
     public static boolean isEquation(String a){
         int l = a.lastIndexOf('=');
@@ -25,6 +28,12 @@ public class Equation {
             return false;
 
     }
+
+    public static RealMatrix coeffs(ArrayList<Equation> eqList){
+        ArrayList<Literal> all = new ArrayList<>();
+        return null;
+    }
+
     public static RealMatrix coeffecients(ArrayList<Equation> eqList){ //takes a linear equation and transforms
         //int size = eqList.size();
         ArrayList<Literal> all = new ArrayList<>();
@@ -62,8 +71,8 @@ public class Equation {
         return a;
     }
 
-
-    public boolean solve(){ //returns the character for which the equation was solved, returns null for no solves. Could implement it with a boolean : true for solved. or int index of variable (with -1 for not solved)
+@Deprecated
+    public boolean solve() throws Exception { //returns the character for which the equation was solved, returns null for no solves. Could implement it with a boolean : true for solved. or int index of variable (with -1 for not solved)
         if (this.left.hasOneUnknown()&&!this.right.p.containsUnknowns()){
             return this.solves();
         }
@@ -103,7 +112,7 @@ public class Equation {
     public static Object nextChain(Object token){
         return Expression.checkChain(token);
     }
-    public static Object checkChain(Object token){
+    public static Object checkChain(Object token) throws Exception {
         int l = token.toString().lastIndexOf('=');
         int f = token.toString().indexOf('=');
         if(l==f && l!=-1)
@@ -123,14 +132,14 @@ public class Equation {
 //        System.out.println("opop");
         String a  = "(3+7)*x + 4*y";
         String b = "4*x + 3*y ";
-        Equation e1 = new Equation(new Expression(a),new Expression("8"));
-        Equation e2 = new Equation(new Expression(b),new Expression("9"));
+       // Equation e1 = new Equation(new Expression(a),new Expression("8"));
+        //Equation e2 = new Equation(new Expression(b),new Expression("9"));
         ArrayList<Equation> z= new ArrayList<>();
-        z.add(e1);
-        z.add(e2);
-        RealMatrix r = coeffecients(z);
-        double t = e1.getConstant();
-        double u = e2.getConstant();
+//        z.add(e1);
+//        z.add(e2);
+//        RealMatrix r = coeffecients(z);
+//        double t = e1.getConstant();
+//        double u = e2.getConstant();
         System.out.println(coeffecients(z));
     }
 }
