@@ -72,6 +72,16 @@ final class Utility{
         //else
         return false;
     }
+    public static boolean isLinearOperator(Operator op){
+        if(op.getOperator().equals("+")||op.getOperator().equals("-")){
+            return true;
+        }
+        else return false;
+    }
+    public static void tabs(int n){
+        while(n-->0)
+            System.out.print("\t");
+    }
     public static boolean isNumber(char token){
         if(token<=57&&token>=48)
             return true;
