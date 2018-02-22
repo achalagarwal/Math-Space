@@ -55,6 +55,42 @@ public class ParseTree {
             p = p.parent;
         return p;
     }
+    public double getCoeffecient(Literal l) throws Exception{
+        if(this.value instanceof Number)
+            return 0.0;
+        if(this.value instanceof Literal && ((Literal) this.value).equals(l)){
+            return 1;
+        }
+        else if(this.value instanceof Operator) {
+            if(Utility.isLinearOperator((Operator)this.value))
+                return ((Operator) this.value).operate(this.left.getCoeffecient(l), this.right.getCoeffecient(l));
+            else{
+                if(this.left.getCoeffecient(l)==0)
+                    return ((Operator) this.value).operate(this.left.getConstant(), this.right.getCoeffecient(l));
+                else if(this.right.getCoeffecient(l)==0)
+                    return ((Operator) this.value).operate(this.left.getCoeffecient(l), this.right.getConstant());
+                else{
+                    throw new Exception("This Expression might not be linear in "+ l.toString());
+                }
+
+            }
+        }
+        else if(this.value instanceof Expression)
+            return ((Expression)this.value).p.getCoeffecient(l);
+        else
+            return 0.0;
+    }
+    public double getConstant(){
+        if(this.value instanceof Literal && ((Literal) this.value).hasValue()){
+            return ((Literal) this.value).getValue();
+        }
+        else if(this.value instanceof Operator)
+        return  ((Operator) this.value).operate(this.left.getConstant(),this.right.getConstant());
+        else if(this.value instanceof Expression)
+            return ((Expression)this.value).p.getConstant();
+        else
+            return 0.0;
+    }
     public boolean containsUnknowns(){
          if(this.value instanceof Literal){
             if(!((Literal) this.value).hasValue())
@@ -197,9 +233,22 @@ public class ParseTree {
 
         return this.value.toString();
     }
-    public void printHelper(){
+    public int getLeftOffset(){
+        ParseTree p = this;
+        int i = 0;
+        while(p.left!=null) {
+            i++;
+            p = p.left;
+        }
+        return i+1;
+    }
+    public ArrayList<PwithH> printHelper(){
         ArrayList<PwithH> test = new ArrayList<>();
         this.stack(test, 0);
+        int left = this.getLeftOffset();
+        int count = 0;
+        ArrayList<Integer> spots = new ArrayList<>();
+        spots.add(left);
         Collections.sort(test, new Comparator<PwithH>() {
             @Override
             public int compare(PwithH o1, PwithH o2) {
@@ -209,21 +258,55 @@ public class ParseTree {
                     return 1;
             }
         });
-        int flag = 1;
-        int priority = 0;
-        while (flag != 0) {
-            flag = 0;
-            for (int j = 0; j < test.size(); j++) {
-                PwithH t = test.get(j);
-                if (t.height == priority) {
-                    System.out.print(t.p.toString() + "\t");
-                    flag = 1;
-                }
-            }
-            System.out.println("\n");
-            priority++;
-        }
-        System.out.println();
+        return test;
+//        ArrayList<Integer> above = new ArrayList<>();
+//        int flag = 1;
+//        int priority = test.get(test.size()-1).height;
+//        int mark;
+//        int j = 0;
+//        int pos = left;
+//        Utility.tabs(left);
+//        while (priority>=0) {
+//            j = 0;
+//
+//            int index = 0;
+//            int lLeft=0;
+//            int lRight;
+//            for (; j < test.size(); j++) {
+//                PwithH t = test.get(j);
+//                if (t.height == priority) {
+//                    mark = spots.get(0);
+//                    spots.remove(0);
+//                    Utility.tabs(mark-pos);
+//                    if(index == 0){
+//                        Utility.tabs(1);
+//                        System.out.print(t.p.toString());
+//                        spots.add(mark+2);
+//                        index = 1;
+//                        lLeft = pos;
+//                    }
+//                    else if(index == 1){
+//                        System.out.print(t.p.toString());
+//                        Utility.tabs(1);
+//                        spots.add(mark+2);
+//                        index = 0;
+//                        above.add((pos+lLeft)/2);
+//                        pos+=1;
+//                    }
+//                    //adding markers in the next line if Operator found
+////                    if(t.p.value instanceof Operator){
+////                        spots.add(mark-1);
+////                        spots.add(mark+1);
+////                    }
+//                }
+//                else if(t.height > priority)
+//                    break;
+//            }
+//            pos = 0;
+//            System.out.println("\n");
+//            priority--;
+//        }
+//        System.out.println();
     }
     public void stack(ArrayList<PwithH> stack, int h){
         if(this.left!=null)
