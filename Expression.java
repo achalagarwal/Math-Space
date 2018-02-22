@@ -30,6 +30,7 @@ public class Expression extends Token{ //equation has variables, numbers and ope
         updateLiterals();
         linkify();
         getResult();
+
 //clean your tokens and keep only subexpressions because all usages of tokens except the recursive call have an if token.getElement is Expression
 
 
@@ -479,7 +480,7 @@ public class Expression extends Token{ //equation has variables, numbers and ope
         // Scanner sc = new Scanner(System.in);
         String a = "(x + y + z * 7) - (3 * (x - y)) = 5";
         Object f = Operator.checkChain(a);
-        String a2 = "(2 * x) + (3 * y) - z = 7 * (z - 2 + x)";
+        String a2 = "(2 * 4 - 7) * (3 + (4 - x)) + (3 * (x - 6)) - 1 = 7 * (z - 2 + x)";
         Object f2 = Operator.checkChain(a2);
         //  Expression e = new Expression(a2);
         System.out.println("Done");
@@ -490,9 +491,18 @@ public class Expression extends Token{ //equation has variables, numbers and ope
         eqs.add((Equation) f2);
         RealMatrix rm = Equation.coeffecients(eqs);
         System.out.println("aja");
+        double abc=0,def=0;
+        for(Equation e:eqs){
+            //abc = e.left.p.printHelper();
+            Object arr[] =  e.vars.toArray();
+            Literal l = (Literal)arr[1];
+            abc = e.left.p.getCoeffecient(l);
+            System.out.println("\n\n");
+            def = e.right.p.getCoeffecient(l);
+        }
 
-
-        System.out.println("aja");
+        System.out.println(abc);
+        System.out.println(def);
         /*
             this is test code for parse tree print
          */
