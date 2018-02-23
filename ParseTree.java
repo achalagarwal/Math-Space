@@ -56,6 +56,8 @@ public class ParseTree {
         return p;
     }
     public void updateLiteral(Literal l){
+        if(this.value instanceof Number)
+            return;
         if(this.value instanceof Literal)
             if(((Literal) this.value).equals(l)){
                 this.value = l;
