@@ -73,7 +73,9 @@ public class Workspace {
                     lgroups.remove(lg);
                     i--;
                     linearGroupSolve();
+                    s = lgroups.size()-1;
                 }
+
             }
         }
     }
