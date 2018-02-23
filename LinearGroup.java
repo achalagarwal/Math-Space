@@ -60,6 +60,8 @@ public class LinearGroup extends Group {
             }
             return 1;
         }
+        if(vars.size() == 0)
+            return 1;
         else
             return 0;
     }
