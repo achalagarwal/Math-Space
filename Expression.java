@@ -1,7 +1,10 @@
 package MathSpace;
+import com.sun.xml.internal.ws.api.pipe.FiberContextSwitchInterceptor;
 import org.apache.commons.math3.analysis.function.Exp;
-import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.*;
 
+import javax.rmi.CORBA.Util;
+import javax.sound.sampled.Line;
 import java.util.*;
 public class Expression extends Token{ //equation has variables, numbers and operators
     //private Object contents[];
@@ -58,6 +61,9 @@ public class Expression extends Token{ //equation has variables, numbers and ope
                     }
                 }
             }
+        }
+        for(Literal l:literals){
+            p.updateLiteral(l);
         }
     }
 
@@ -478,9 +484,9 @@ public class Expression extends Token{ //equation has variables, numbers and ope
 
     public static void main(String[] args) throws Exception {
         // Scanner sc = new Scanner(System.in);
-        String a = "(x + y + z * 7) - (3 * (x - y)) = 5";
+        String a = "(x + z * 7) - (3 * (x - 1)) = 5";
         Object f = Operator.checkChain(a);
-        String a2 = "(2 * 4 - 7) * (3 + (4 - x)) + (3 * (x - 6)) - 1 = 7 * (z - 2 + x)";
+        String a2 = "(2 * 4 - 7) * (3 + (4 - z)) + (3 * (z - 6)) - 1 = 7 * (x - 2 + z)";
         Object f2 = Operator.checkChain(a2);
         //  Expression e = new Expression(a2);
         System.out.println("Done");
@@ -492,42 +498,66 @@ public class Expression extends Token{ //equation has variables, numbers and ope
         RealMatrix rm = Equation.coeffecients(eqs);
         System.out.println("aja");
         double abc=0,def=0;
+        double[][] matrixData = new double[2][2];
+        int i = 0;
         for(Equation e:eqs){
             //abc = e.left.p.printHelper();
             Object arr[] =  e.vars.toArray();
-            Literal l = (Literal)arr[1];
+            Literal l = (Literal)arr[0];
             abc = e.left.p.getCoeffecient(l);
             System.out.println("\n\n");
             def = e.right.p.getCoeffecient(l);
+            matrixData[i][0] = abc-def;
+             l = (Literal)arr[1];
+            abc = e.left.p.getCoeffecient(l);
+            System.out.println("\n\n");
+            def = e.right.p.getCoeffecient(l);
+            matrixData[i][1] = abc-def;
+            i++;
         }
 
         System.out.println(abc);
         System.out.println(def);
+        //assume 2 equations 2 unknowns
+
+        RealMatrix m = MatrixUtils.createRealMatrix(matrixData);
+        //RealMatrix coefficients = new Array2DRowRealMatrix(new double[][] { { 2, 3, -2 }, { -1, 7, 6 }, { 4, -3, -5 } }, false);
+        DecompositionSolver solver = new LUDecomposition(m).getSolver();
+        double[] constant = new double[2];
+        constant[0] = -eqs.get(0).left.p.getConstant() + eqs.get(0).right.p.getConstant();
+        constant[1] = -eqs.get(1).left.p.getConstant() + eqs.get(1).right.p.getConstant();
+        RealVector constants = new ArrayRealVector(constant, false);
+        RealVector solution = solver.solve(constants);
+        System.out.println(solution);
         /*
             this is test code for parse tree print
          */
 
+        //LinearGroup lg = new LinearGroup(eqs);
+        Set set = Utility.literalUnify(eqs.get(0),eqs.get(1));
+        System.out.println("a");
     }
-    public static void tester(ArrayList<Object> stack,int pos){
-        int buffer = 0;
-        ArrayList<Object> tetet = new ArrayList<>();
-        tetet.add(stack.get(pos));
-        int i=0;
-        if(stack.get(pos) instanceof Operator){
-            i = pos;
-            tetet.add(stack.get(i-1));
-
-        }
-        for(;i>=0;i--){
-            if(stack.get(i) instanceof Literal)
-                buffer--;
-            if(buffer == -1){
-                stack.add(stack.get(i));
-            }
-            if(stack.get(i) instanceof Operator)
-                buffer++;
-        }
-    }
+//    public static void tester(ArrayList<Object> stack,int pos){
+//        int buffer = 0;
+//        ArrayList<Object> tetet = new ArrayList<>();
+//        tetet.add(stack.get(pos));
+//        int i=0;
+//        if(stack.get(pos) instanceof Operator){
+//            i = pos;
+//            tetet.add(stack.get(i-1));
+//
+//        }
+//        for(;i>=0;i--){
+//            if(stack.get(i) instanceof Literal)
+//                buffer--;
+//            if(buffer == -1){
+//                stack.add(stack.get(i));
+//            }
+//            if(stack.get(i) instanceof Operator)
+//                buffer++;
+//        }
+//
+//    }
 
 //    public static void main(String[] args){
 //        Scanner sc = new Scanner(System.in);
