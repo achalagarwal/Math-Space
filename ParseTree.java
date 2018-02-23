@@ -55,6 +55,16 @@ public class ParseTree {
             p = p.parent;
         return p;
     }
+    public void updateLiteral(Literal l){
+        if(this.value instanceof Literal)
+            if(((Literal) this.value).equals(l)){
+                this.value = l;
+            }
+            if(this.left!=null)
+                this.left.updateLiteral(l);
+            if(this.right!=null)
+                this.right.updateLiteral(l);
+    }
     public double getCoeffecient(Literal l) throws Exception{
         if(this.value instanceof Number)
             return 0.0;
@@ -170,6 +180,7 @@ public class ParseTree {
         }
         return null;
     }
+    @Deprecated
     public double getCoeffecient(){
         double a = 1.0;
         ParseTree n = this;
