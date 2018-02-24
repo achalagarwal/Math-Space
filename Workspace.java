@@ -20,18 +20,29 @@ public class Workspace {
     }
     public void add(Equation e) throws Exception{
         variables.addAll(Utility.literalUnify(variables,e.vars));
-        e.right.recurseLiterals();
-        e.left.recurseLiterals();
+        e.updateExpressions();
         this.equations.add(e);
         this.generateGroupsLastAdded();
     }
     public void add(Expression e){
+        ArrayList<Literal> temp1 = new ArrayList<>(e.literals);
         expressions.add(e);
-        for(Literal l:e.literals){
-            if(!variables.contains(l)){
-                variables.add(l);
-            }
+        for(int i = 0;i<temp1.size();i++){
+            Literal l1 = temp1.get(i);
+            boolean inserted = false;
+           for(Literal l2:variables) {
+               if (l1.equals(l2)) {
+                   temp1.remove(i);
+                   temp1.add(i, l2);
+                   inserted = true;
+                   break;
+               }
+           }
+           if(!inserted)
+               this.variables.add(l1);
         }
+        e.literals = new HashSet<>(temp1);
+        e.recurseLiterals();
     }
     public void checkLinearGroup(ArrayList<Equation> alist){
         new Group(alist); //if solved recurse all groups (damn)
@@ -91,8 +102,10 @@ public class Workspace {
     public static void main(String[] args) throws Exception {
         Workspace w = new Workspace();
         Scanner sc = new Scanner(System.in);
-        while (!sc.hasNextInt()) {
+        while (sc.hasNextLine()) {
             String abc = sc.nextLine();
+            if(abc.equalsIgnoreCase("q")||abc.equalsIgnoreCase("quit"))
+                break;
             w.add(Operator.checkChain(abc));
 //            for(Literal l:prev.literals){
 //                l.addLiteral(w.variables);
