@@ -19,6 +19,12 @@ public class Equation {
         l.recurseLiterals();
         r.recurseLiterals();
     }
+    public void updateExpressions() throws Exception{
+        vars.addAll(Utility.literalUnify(vars,left.literals));
+        left.recurseLiterals();
+        vars.addAll(Utility.literalUnify(vars,right.literals));
+        right.recurseLiterals();
+    }
     public static boolean isEquation(String a){
         int l = a.lastIndexOf('=');
         int f = a.indexOf('=');
