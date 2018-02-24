@@ -9,7 +9,7 @@ import java.util.*;
 public class Expression extends Token{ //equation has variables, numbers and operators
     //private Object contents[];
     Scanner sc = new Scanner(System.in);
-    ArrayList<Literal> literals;
+    Set<Literal> literals;
     private LinkedList<Object> contents = new LinkedList<>();
     //private boolean arr[]; //copy.length
     String e;
@@ -29,7 +29,7 @@ public class Expression extends Token{ //equation has variables, numbers and ope
          tokenify();
         outerOps = new ArrayList<>();
         updateOperators();
-        literals = new ArrayList<Literal>();
+        literals = new HashSet<>();
         updateLiterals();
         linkify();
         getResult();
@@ -48,23 +48,28 @@ public class Expression extends Token{ //equation has variables, numbers and ope
     }
 
     public void recurseLiterals() {
+        ArrayList<Literal> temp1 = new ArrayList<>(literals);
         for(Object exp:tokens){
             if(exp instanceof Expression){
-                for(int i = 0;i<((Expression) exp).literals.size();i++){
-                    Literal l1= ((Expression) exp).literals.get(i);
-                    for(int j =  0;j<this.literals.size();j++){
-                        Literal l2 = this.literals.get(j);
+                ArrayList<Literal> temp2 = new ArrayList<>(((Expression) exp).literals);
+                for(int i = 0;i<temp2.size();i++){
+                    Literal l1= temp2.get(i);
+                    for(int j =  0;j<temp1.size();j++){
+                        Literal l2 = temp1.get(j);
                         if(l1.equals(l2)){
-                            ((Expression) exp).literals.remove(i);
-                            ((Expression) exp).literals.add(i,l2);
+                            temp2.remove(i);
+                            temp2.add(i,l2);
                         }
                     }
                 }
+                ((Expression) exp).literals = new HashSet<>(temp2);
+                ((Expression) exp).recurseLiterals();
             }
         }
         for(Literal l:literals){
             p.updateLiteral(l);
         }
+        getResult();
     }
 
         public void tokenify (){
@@ -105,56 +110,63 @@ public class Expression extends Token{ //equation has variables, numbers and ope
     }
 
     public void updateLiterals(){
+        ArrayList<Literal> temp1 = new ArrayList<>(literals);
         for(Object t:tokens) {
             if (t instanceof Expression){
+                ArrayList<Literal> temp2 = new ArrayList<>(((Expression) t).literals);
                 // this.literals.addAll(((Expression) t).literals);
-                for(int j = 0;j<((Expression) t).literals.size();j++){
-                    Literal il = ((Expression) t).literals.get(j);
+                for(int j = 0;j<temp2.size();j++){
+                    Literal il = temp2.get(j);
                     boolean flag = true;
 //                    for(Literal l:literals){
 //                        if(il.equals(l))
 //                            flag = false;
 //                    }
-                    for(int i = 0;i<literals.size();i++){
-                        Literal l = literals.get(i);
+                    for(int i = 0;i<temp1.size();i++){
+                        Literal l = temp1.get(i);
                         if(il.equals(l)) {
                             flag = false;
-                            ((Expression) t).literals.remove(j);
-                            ((Expression) t).literals.add(j,l);
+                            temp2.remove(j);
+                            temp2.add(j,l);
                             break;
                         }
                     }
                     if(flag)
-                        literals.add(il);
+                        temp1.add(il);
                 }
+                ((Expression) t).literals = new HashSet<>(temp2);
             }
+
         }
+
         for(Object t:tokens){
              if(t instanceof Literal){
                 if(!(t instanceof Number)){
                     boolean flag= true;
-                    for(Literal l:literals){
+                    for(Literal l:temp1){
                         if(l.equals(t))
                             flag = false;
                     }
                     if(flag)
-                    literals.add((Literal)t);
+                    temp1.add((Literal)t);
                 }
             }
         }
         for(Object o:tokens){
             if(o instanceof Expression){
-                for(int i = 0;i<((Expression) o).literals.size();i++){
-                    Literal il = ((Expression) o).literals.get(i);
-                    for(Literal l:literals){
+                ArrayList<Literal> temp2 = new ArrayList<>(((Expression) o).literals);
+                for(int i = 0;i<temp2.size();i++){
+                    Literal il = temp2.get(i);
+                    for(Literal l:temp1){
                         if(il.equals(l)){
-                            ((Expression) o).literals.remove(il);
-                            ((Expression) o).literals.add(i,l);
+                           temp2.remove(il);
+                           temp2.add(i,l);
                         }
                     }
                 }
             }
         }
+        literals = new HashSet<>(temp1);
     }
 
     public void linkify(){
@@ -253,8 +265,8 @@ public class Expression extends Token{ //equation has variables, numbers and ope
         }
         return save;
     }
-    public ArrayList<Literal> getUnknownLiterals(){
-        ArrayList<Literal> list = this.literals;
+    public Set<Literal> getUnknownLiterals(){
+        Set<Literal> list = this.literals;
         for(Literal l :list){
             if(l.hasValue())
                 list.remove(l);
