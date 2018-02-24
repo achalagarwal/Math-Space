@@ -111,6 +111,11 @@ public class Workspace {
 //                l.addLiteral(w.variables);
 //            }
         }
+        for(Expression e:w.expressions){
+            e.getResult();
+            if(e.hasResult())
+                System.out.println(e.toString() + " --> " + e.result);
+        }
         for(Literal l:w.variables){
             if(l.hasValue())
             System.out.println(l.toString()+" -> "+l.getValue());
